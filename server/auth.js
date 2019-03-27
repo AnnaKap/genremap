@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session')
 const Router = express.Router;
 let request = require('request')
 let querystring = require('querystring')
@@ -8,6 +9,7 @@ const secrets = require('../secrets')
 let redirect_uri = 
   process.env.REDIRECT_URI || 
   'http://localhost:3000/auth/callback'
+
 
 auth.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -41,8 +43,11 @@ auth.get('/callback', function(req, res) {
     }
     var access_token = body.access_token
     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
-    res.redirect(uri + '?access_token=' + access_token)
+    req.session.accessToken = access_token;
+  
+    res.redirect(uri + `/home`)
   })
 })
+
 
 module.exports = auth;
