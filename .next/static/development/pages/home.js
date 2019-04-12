@@ -12704,8 +12704,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/header */ "./components/header.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
+
 
 
 
@@ -12752,7 +12755,7 @@ function (_Component) {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_10___default.a.get('/api/me');
+                return axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('/api/me');
 
               case 3:
                 _ref = _context.sent;
@@ -12762,7 +12765,7 @@ function (_Component) {
                   userId: data.id
                 });
                 _context.next = 8;
-                return axios__WEBPACK_IMPORTED_MODULE_10___default.a.post('api/playlists', {
+                return axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('api/playlists', {
                   userId: this.state.userId
                 });
 
@@ -12797,8 +12800,15 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h1", null, "home"), this.state.user.length > 1 ? react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, " ", this.state.user, " ") : react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, " loading... "), this.state.playlists.length && this.state.playlists.map(function (playlist) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h1", null, playlist.name), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, playlist.tracks.total));
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h1", null, "home"), this.state.user.length > 1 ? react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, " ", this.state.user, " ") : react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, " loading... "), this.state.playlists.length && this.state.playlists.map(function (playlist, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+          key: idx
+        }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_10___default.a, {
+          href: "/map?playlistId=".concat(playlist.id),
+          as: "/map"
+        }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h1", {
+          id: playlist.id
+        }, playlist.name)), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, playlist.tracks.total));
       }));
     }
   }]);

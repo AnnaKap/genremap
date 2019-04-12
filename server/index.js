@@ -4,7 +4,7 @@ const session = require('express-session')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-
+const axios = require('axios')
 
 app.prepare()
 .then(() => {
@@ -20,6 +20,25 @@ app.prepare()
   }))
   server.use('/api', require('./api'))
   server.use('/auth', require('./auth'))
+  server.get('/map/:playlistId', (req, res)=> {
+    try{
+      return app.render(req, res, '/map', { playlistId: req.params.playlistId})
+    }
+            
+            // const tracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`)
+            // let genres = {}
+            // console.log(tracks.data)
+            // tracks.data.forEach(track => {
+            //    const songName =  track.name
+            //    console.log(songName)
+            // });
+            // return app.render(req, res, '/map', { slug: req.params.playlistId, tracks: tracks.data})
+        // }
+    catch(error){
+      console.error(err)
+    }
+  })
+    
   server.get('*', (req, res) => {
     return handle(req, res)
   })

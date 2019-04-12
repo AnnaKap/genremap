@@ -30,6 +30,49 @@ api.post('/playlists', async(req, res)=>{
     }
     catch(err){
         console.error(err)
+        res.send(error)
+    }
+})
+api.get('/map/:playlistId',(req, res)=> {
+    // try{
+        if(req.session.accessToken){
+            console.log(req.params)
+            const {playlistId} = req.params
+            axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`)
+            .then(reponse =>{
+                return app.render(req, res, '/map', { playlistId: req.params.playlistId, tracks: reponse.data})
+            }
+            )
+            // const tracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`)
+            // let genres = {}
+            // console.log(tracks.data)
+            // tracks.data.forEach(track => {
+            //    const songName =  track.name
+            //    console.log(songName)
+            // });
+            // return app.render(req, res, '/map', { slug: req.params.playlistId, tracks: tracks.data})
+        // }
+        }
+    })
+//     catch(err){
+//         console.error(err)
+//     }
+// })
+api.post('/tracks', async(req, res)=>{
+    try{
+        if(req.session.accessToken){
+            const {playlistId} = req.body
+            const tracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`)
+            let genres = {}
+            console.log(tracks.data)
+            tracks.data.forEach(track => {
+               const songName =  track.name
+               console.log(songName)
+            });
+        }
+    }
+    catch(err){
+        console.error(err)
     }
 })
 module.exports = api;
