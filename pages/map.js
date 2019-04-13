@@ -1,22 +1,24 @@
 import {Component} from 'react'
 import axios from 'axios'
+
 export default class map extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
-            playlistId:""
+            playlistId:"" 
         }
     }
    static async getInitialProps({ query }){
-       console.log('playlistId', await query.playlistId)
+       console.log('playlistId', query) 
+       console.log(this.props)
        return {query}
    }
-   componentDidMount(){
-    this.setState({
-        playlistId : query.playlistId
-    })
-}
+   async componentDidMount(){
+      const tracks = await axios.post('/api/tracks', {playlistId: this.props.query.playlistId})
+      console.log(tracks.data)
+   }
    render(){
-       return <h1>Map</h1>
+       
+       return <h1>{this.props.query.playlistId}</h1>
    }
 }

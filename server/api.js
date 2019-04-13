@@ -62,11 +62,18 @@ api.post('/tracks', async(req, res)=>{
     try{
         if(req.session.accessToken){
             const {playlistId} = req.body
-            const tracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`)
+            const tracks = await axios({
+                method: 'get',
+                url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+                headers:{
+                    'Authorization': `Bearer ${req.session.accessToken}`,
+                    'Content-Type': 'application/json'          
+                 }
+            })
             let genres = {}
-            console.log(tracks.data)
-            tracks.data.forEach(track => {
-               const songName =  track.name
+            console.log(tracks.data.items)
+            tracks.data.items.forEach(track => {
+               const songName =  track.track.artists[0].name
                console.log(songName)
             });
         }
